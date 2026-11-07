@@ -47,7 +47,7 @@ function explainCheck(check, analysis, mode) {
       : ['No IP-address destination', technical ? 'The parsed hostname is not an IPv4 or IPv6 literal. This does not establish domain reputation.' : 'The destination uses a name rather than an IP address. A name alone does not prove trustworthiness.'],
     credentials: check.warning
       ? ['Login information before @', technical ? 'Nonempty URL username or password detected. Userinfo precedes @; the parsed hostname is the actual destination.' : 'Text before @ is login information, not the website you will reach. Check the actual destination shown on the left.']
-      : ['No disguised destination via login', technical ? 'The URL parser returned empty username and password fields. Any @ in the path or query is not userinfo.' : 'No login information is hiding the destination before an @. Other forms of misleading links are still possible.'],
+      : ['No URL credentials detected', technical ? 'The URL parser returned empty username and password fields. Any @ in the path or query is not userinfo.' : 'No login information is hiding the destination before an @. Other forms of misleading links are still possible.'],
     length: check.warning
       ? ['Unusually long URL', technical ? `${analysis.urlLength} Unicode code points exceeds the ${LONG_URL_THRESHOLD}-character heuristic. Length alone does not indicate maliciousness.` : `This link is longer than ${LONG_URL_THRESHOLD} characters. Long links can be legitimate, but details can be harder to notice.`]
       : ['URL within length threshold', technical ? `${analysis.urlLength} Unicode code points; threshold is strictly greater than ${LONG_URL_THRESHOLD}, after trimming surrounding whitespace.` : `This link has ${analysis.urlLength} characters, within our ${LONG_URL_THRESHOLD}-character threshold. Short links can still be deceptive.`]
@@ -63,6 +63,12 @@ function makeElement(tag, className, text) {
   return element;
 }
 
+function structuralSummary(warningCount) {
+  return warningCount === 0
+    ? 'No structural warnings detected'
+    : `${warningCount} structural warning${warningCount === 1 ? '' : 's'} detected`;
+}
+
 function renderResults() {
   if (!currentAnalysis) return;
   const analysis = currentAnalysis;
@@ -71,21 +77,21 @@ function renderResults() {
     ? `Parsed hostname · Protocol: ${analysis.protocol} · Input length: ${analysis.urlLength}`
     : 'This is the website name or IP address in your link. Check that it matches where you intended to go.';
   const badge = document.getElementById('warning-count');
-  badge.className = `badge ${analysis.warningCount ? 'warning' : 'passed'}`;
-  badge.textContent = `${analysis.warningCount} potential warning${analysis.warningCount === 1 ? '' : 's'} · 4 checks`;
+  badge.className = `badge ${analysis.warningCount ? 'warning' : 'neutral'}`;
+  badge.textContent = structuralSummary(analysis.warningCount);
   const findings = document.getElementById('findings');
   findings.replaceChildren();
   analysis.checks.forEach(check => {
     const [title, explanation] = explainCheck(check, analysis, currentMode);
     const row = makeElement('div', 'finding');
-    const icon = makeElement('span', `status-icon ${check.warning ? 'warning' : 'passed'}`, check.warning ? '!' : '✓');
-    icon.setAttribute('aria-label', check.warning ? 'Potential warning' : 'Check passed');
+    const icon = makeElement('span', `status-icon ${check.warning ? 'warning' : 'neutral'}`, check.warning ? '!' : 'i');
+    icon.setAttribute('aria-label', check.warning ? 'Structural warning' : 'Structural observation');
     const content = makeElement('div');
     content.append(makeElement('h3', '', title), makeElement('p', '', explanation));
     row.append(icon, content);
     findings.append(row);
   });
-  document.getElementById('result-announcement').textContent = `${analysis.hostname}: ${analysis.warningCount} potential warnings. ${currentMode} explanations shown. No warning count guarantees safety.`;
+  document.getElementById('result-announcement').textContent = `${analysis.hostname}: ${structuralSummary(analysis.warningCount)}. ${currentMode} explanations shown. Website safety has not been assessed. Website content and threat intelligence databases are not checked.`;
 }
 
 function renderHistory() {
@@ -93,14 +99,15 @@ function renderHistory() {
   list.replaceChildren();
   recentChecks.forEach(analysis => {
     const item = makeElement('li');
-    const button = makeElement('button', '', analysis.submittedUrl);
+    const urlText = makeElement('span', 'history-url', analysis.submittedUrl);
+    const button = makeElement('button', 'reanalyze-button', 'Analyze again');
     button.type = 'button';
     button.setAttribute('aria-label', `Analyze again: ${analysis.submittedUrl}`);
     button.addEventListener('click', () => {
       document.getElementById('url-input').value = analysis.submittedUrl;
       submitAnalysis();
     });
-    item.append(button, makeElement('div', `history-meta ${analysis.warningCount ? 'warning' : 'passed'}`, `${analysis.warningCount} potential warning${analysis.warningCount === 1 ? '' : 's'} · Click to analyze again`));
+    item.append(urlText, makeElement('div', `history-meta ${analysis.warningCount ? 'warning' : 'neutral'}`, structuralSummary(analysis.warningCount)), button);
     list.append(item);
   });
   document.getElementById('history-empty').hidden = recentChecks.length > 0;

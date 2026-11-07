@@ -15,7 +15,7 @@ Open `index.html` directly in a modern browser. No installation, backend, packag
 - A documented long-URL heuristic: strictly more than 100 Unicode code points, after trimming surrounding whitespace. This is a readability threshold, not a scientific risk score.
 - Actual destination hostname, four explained findings, and a warning count.
 - Simple/Technical explanations of identical results.
-- Last five successful analyses in JavaScript memory, reanalysis buttons, and Clear history.
+- Last five successful analyses in JavaScript memory, explicit Analyze again buttons (the displayed URLs are noninteractive text), and Clear history.
 - Harmless demonstration inputs, education, Privacy, and About sections.
 - Responsive layout, keyboard controls, focus states, and accessible status announcements.
 
@@ -24,7 +24,7 @@ Only explicit HTTP/HTTPS URLs are accepted. Spaces, line breaks, backslashes, mi
 ## Privacy and limitations
 The application never requests, opens, previews, or navigates to submitted destinations. Input is rendered with `textContent`, never HTML. CSP blocks network connections and form submissions. There is no analytics, cookie, localStorage, database, or permanent URL history. Reloading clears history. Clear history removes recent entries; the current input and analysis stay visible until replaced or the page is reloaded.
 
-A passed check is not a safe verdict. Legitimate URLs may trigger warnings. Phishing URLs may trigger none. The app does not inspect reputation, website content, malware, redirects, certificate validity, or ownership. Do not use it as the sole basis for trusting a link. Avoid entering sensitive URLs in a public demonstration or screen recording.
+Results are structural observations, not safety verdicts. When all four rules produce no warning, the interface says **“No structural warnings detected”**, using neutral blue information icons rather than green approval checkmarks. A prominent notice above the findings says **“Website safety has not been assessed.”** PluQ Lite does not inspect website content or consult threat intelligence databases. An ordinary-looking HTTPS URL can host harmful content and trigger zero structural warnings; never treat that result as permission to click. Legitimate URLs may trigger warnings. Phishing URLs may trigger none. The app does not inspect reputation, website content, malware, redirects, certificate validity, or ownership. Do not use it as the sole basis for trusting a link. Avoid entering sensitive URLs in a public demonstration or screen recording.
 
 ## Technologies and files
 - `index.html`: semantic layout, input, navigation, results, education, and metadata.
@@ -43,15 +43,15 @@ AI assisted planning, code development, testing, and explanation. PluQ Lite uses
 ## Tests
 Run `node tests.js` if Node is installed. Tests exercise URL parsing, thresholds, error handling, explanation modes, history, clearing, examples, navigation markup, and blocked network-related APIs using a lightweight DOM substitute. They do not establish visual quality or real-browser accessibility. See TEST_RESULTS.md for the actual verification performed.
 
-For manual browser verification: open index.html; analyze each example; verify hostname, counts, and all four findings; switch modes; click a recent entry; clear history; reload; visit Home/Privacy/About; use Tab and Enter; inspect widths of 375px and 1280px in browser developer tools. In the Network panel, clear the log after initial page load and analyze several URLs: there should be no requests. Check that logo, layout, focus outlines, and wrapping are legible.
+For manual browser verification: open index.html; analyze each example; verify hostname, counts, and all four findings; switch modes; click its Analyze again button; clear history; reload; visit Home/Privacy/About; use Tab and Enter; inspect widths of 375px and 1280px in browser developer tools. In the Network panel, clear the log after initial page load and analyze several URLs: there should be no requests. Check that logo, layout, focus outlines, and wrapping are legible.
 
 ## Three-minute live demo
 1. Open the site. Explain: “This helps people read a URL before clicking.”
-2. Click HTTPS, then Analyze URL. Show example.com and zero warnings; point out this is not a safety guarantee.
+2. Click HTTPS, then Analyze URL. Show example.com and “No structural warnings detected”; point out this is not a safety guarantee.
 3. Click Misleading @, then Analyze URL. Show that untrusted.example is the actual destination, even though trusted.example appears first.
 4. Toggle Technical, then Simple. The same findings get different explanations.
 5. Try IP address: HTTP and the IP destination produce two warnings.
-6. Reanalyze a Recent Check, then Clear history.
+6. Click Analyze again beneath a Recent Check, then Clear history.
 7. Point to the phishing tips and Privacy/About. Explain that rules run locally without visiting links or using a live AI model.
 
 Talking points: the browser URL parser separates hostname from login text; four rules produce warnings; predefined explanations keep results understandable; no threat-reputation service or website scanning is involved.
@@ -63,15 +63,12 @@ Talking points: the browser URL parser separates hostname from login text; four 
 - Replay the recording to verify readable results and audible narration; ensure no personal URLs or notifications appear.
 - Submit the video link in the format requested by organizers. No slides are needed.
 
-## Separate GitHub submission (requires your approval)
-This project has its own local Git repository. No original repository should be changed. Review `git status` and the file list before committing. When ready, create a new empty GitHub repository named `PluQ-Lite` (choose visibility deliberately; do not initialize it with another README). Only after approving remote creation/publishing, connect and push this repository:
+## GitHub repository
 
-```text
-git add index.html style.css script.js assets/shield.png README.md .gitignore tests.js TEST_RESULTS.md
-git commit -m "Build PluQ Lite local URL checker"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/PluQ-Lite.git
-git push -u origin main
-```
+Project repository: https://github.com/chemsmilk/PluQ-Lite
 
-Check the destination repository before pushing. A public website is optional for the local demo. GitHub Pages deployment would be a separate publishing action requiring approval. Verify the event's submission deadline, repository visibility, video requirements, and any runtime-AI requirement directly with organizers.
+This project has its own public repository and local Git history. PlutoHacks2026 is a separate project and must not be modified when working on PluQ Lite.
+
+To submit, provide this repository URL and your recorded demonstration according to the event instructions. For the live demonstration, open index.html locally. GitHub Pages is not enabled by this source-code upload; deploying a public website is a separate action.
+
+For later updates, review changes and test before committing and pushing from this project folder. Verify the event's deadline, repository visibility, video requirements, and any runtime-AI requirement directly with organizers.
