@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Understand a link before you click with four private, local URL structure checks.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <title>PluQ Lite · URL Safety Checker</title>
+  <link rel="icon" href="assets/shield.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#home">Skip to analyzer</a>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="PluQ Lite home"><img src="assets/shield.png" alt="" width="58" height="52"><span>PluQ <b>Lite</b></span></a>
+    <span class="subtitle">URL Safety Checker</span>
+    <nav aria-label="Main navigation"><a href="#home">Home</a><a href="#privacy">Privacy</a><a href="#about">About</a></nav>
+  </header>
+  <main id="home" tabindex="-1">
+    <section class="hero" aria-labelledby="headline">
+      <p class="eyebrow">A little clarity. Before every click.</p>
+      <h1 id="headline">Know the link before the <span>click.</span></h1>
+      <p>A simple security tool to understand URLs and spot potential warning signs.</p>
+    </section>
+    <form id="analyzer" novalidate>
+      <label class="sr-only" for="url-input">URL to analyze (include http:// or https://)</label>
+      <div class="input-wrap"><span aria-hidden="true">↗</span><input id="url-input" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="https://example.com" aria-describedby="input-help input-error" required></div>
+      <button class="analyze-button" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7"></circle><path d="m15 15 7 7"></path></svg>Analyze URL</button>
+    </form>
+    <p id="input-help" class="input-help">Include http:// or https://. Checks run locally; the destination is never visited.</p>
+    <p id="input-error" class="error" role="alert"></p>
+    <div class="examples" aria-label="Demonstration URLs"><span>Try an example</span><button type="button" data-example="https://example.com">HTTPS</button><button type="button" data-example="http://example.com">No HTTPS</button><button type="button" data-example="http://192.0.2.1">IP address</button><button type="button" data-example="https://trusted.example@untrusted.example">Misleading @</button></div>
+    <section class="outlined results" aria-labelledby="result-title">
+      <div class="section-heading"><h2 id="result-title">Analysis Result</h2><div class="mode-switch" role="group" aria-label="Explanation mode"><button id="simple-mode" type="button" aria-pressed="true">Simple</button><button id="technical-mode" type="button" aria-pressed="false">Technical</button></div></div>
+      <p id="result-announcement" class="sr-only" role="status" aria-live="polite"></p>
+      <div class="result-grid"><div class="destination card"><span class="eyebrow">Actual destination</span><h3 id="hostname">Your next link, explained.</h3><p id="destination-help">Analyze a URL to reveal the hostname your browser would connect to.</p><span id="warning-count" class="badge neutral">Ready when you are</span><p class="limitation">These checks describe URL structure. They cannot establish whether a website is trustworthy.</p></div><div id="findings" class="findings"><div class="empty-state"><span class="empty-icon" aria-hidden="true">⌕</span><h3>Four checks. Clear explanations.</h3><p>HTTPS, IP addresses, hidden destination cues, and URL length — explained in your language.</p><span class="badge neutral">Private by design · No external APIs</span></div></div></div>
+    </section>
+    <section class="outlined bottom-grid" aria-label="History and URL safety education">
+      <div class="card recent"><div class="section-heading"><h2>Recent Checks</h2><button id="clear-history" class="text-button" type="button" disabled>Clear history</button></div><p class="panel-caption">Your last five checks · This page session only</p><ul id="history-list"></ul><p id="history-empty" class="empty-history">No links checked yet.<br>Your recent checks will appear here.</p><p id="history-status" class="sr-only" role="status"></p></div>
+      <div class="card tips"><h2>Phishing &amp; URL Safety Tips</h2><p class="panel-caption">Pause. Look closer. Make an informed choice.</p><ul><li><strong>Phishing is impersonation.</strong> Deceptive messages and sites try to get your passwords, money, or personal information.</li><li><strong>Read the real destination.</strong> A familiar name before an @ can be login information. The hostname after it is the destination.</li><li><strong>A lock is not a guarantee.</strong> HTTPS encrypts the connection. Deceptive websites can use it too.</li><li><strong>Context matters.</strong> Check the sender and spelling. When unsure, use a known bookmark or type the official address yourself.</li><li><strong>A URL is only one clue.</strong> These checks do not inspect content, reputation, redirects, downloads, or malware.</li></ul></div>
+    </section>
+    <section id="privacy" class="info-section" tabindex="-1"><span class="eyebrow">Your links stay with you</span><h2>Privacy</h2><p>Analysis happens in JavaScript on this page. PluQ Lite never fetches, opens, previews, or navigates to submitted URLs. Your last five successful checks stay only in JavaScript memory; Clear history or reload the page to erase them. There are no analytics, cookies, external APIs, or permanent storage of submitted URLs.</p></section>
+    <section id="about" class="info-section" tabindex="-1"><span class="eyebrow">Built for PlutoHacks 2026</span><h2>About PluQ Lite</h2><p>PluQ Lite helps beginners understand a link before clicking. Four rule-based checks examine HTTPS, IP-address destinations, URL credentials, and unusually long URLs. Simple and Technical modes explain the same results with different wording.</p><p>Built with HTML, CSS, and vanilla JavaScript. AI assisted development, planning, testing, and code explanation; no live AI model performs threat detection. The project supports the theme “Build with AI, Protect What Matters, Innovate with People at the Center.”</p><p>No warning count proves a link safe or malicious. This tool does not visit websites or detect all phishing. If the event requires AI running inside the application, this version does not meet that additional requirement.</p></section>
+    <footer>PluQ Lite <span>Understand the URL. Stay curious. Click thoughtfully.</span></footer>
+  </main>
+</body>
+</html>
