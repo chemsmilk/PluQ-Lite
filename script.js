@@ -91,7 +91,7 @@ function renderResults() {
     row.append(icon, content);
     findings.append(row);
   });
-  document.getElementById('result-announcement').textContent = `${analysis.hostname}: ${structuralSummary(analysis.warningCount)}. ${currentMode} explanations shown. Website safety has not been assessed. Website content and threat intelligence databases are not checked.`;
+  document.getElementById('result-announcement').textContent = `${analysis.hostname}: ${structuralSummary(analysis.warningCount)}. ${currentMode} explanations shown. URL structure checked only. The destination website, its content, and threat intelligence databases are not checked. No structural warnings does not rule out phishing.`;
 }
 
 function renderHistory() {

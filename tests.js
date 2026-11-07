@@ -55,7 +55,7 @@ test('Ordinary HTTPS results never convey a definitive safety verdict', () => {
       elements[mode + '-mode'].events.click();
       assert.equal(elements['warning-count'].textContent, 'No structural warnings detected');
       assert.equal(elements['warning-count'].className, 'badge neutral');
-      assert.match(elements['result-announcement'].textContent, /Website safety has not been assessed/);
+      assert.match(elements['result-announcement'].textContent, /No structural warnings does not rule out phishing/);
       for (const row of elements.findings.children) {
         const icon = row.children[0];
         assert.equal(icon.textContent, 'i');
@@ -68,8 +68,8 @@ test('Ordinary HTTPS results never convey a definitive safety verdict', () => {
       assert.equal(elements['history-list'].children[0].children[1].className, 'history-meta neutral');
     }
   }
-  assert.ok(html.includes('Website safety has not been assessed.'));
-  assert.ok(html.includes('does not inspect website content or consult threat intelligence databases'));
+  assert.ok(html.includes('No structural warnings does not rule out phishing.'));
+  assert.ok(html.includes('does not inspect the destination website or its content, or consult threat intelligence databases'));
   assert.ok(html.indexOf('class="scope-notice"') < html.indexOf('class="result-grid"'));
   assert.doesNotMatch(source, /Check passed|✓/);
 });
