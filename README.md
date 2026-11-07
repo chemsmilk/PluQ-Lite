@@ -1,9 +1,9 @@
 # PluQ Lite
 
-Know the link before the click. A beginner-friendly URL structure checker for PlutoHacks 2026, built around the supplied Figma design and original cyan shield logo.
+Know the link before the click. A cybersecurity project for the PlutoHacks 2026 Hackathon.
 
 ## The problem
-Familiar-looking text and HTTPS can make deceptive links seem trustworthy. PluQ Lite makes the actual destination and four structural signals easier to understand before clicking.
+Because of the rise of phishing scams, PluQ intends to protect users from this security problem by checking the structure of links before users click on them, making sure they look structurally sound.
 
 ## Run
 Open `index.html` directly in a modern browser. No installation, backend, package manager, API key, or internet connection is needed. All fonts and assets are local.
@@ -38,36 +38,12 @@ Results are structural observations, not safety verdicts. When all four rules pr
 The main flow is `submitAnalysis` → `analyzeUrl` → `renderResults` and `renderHistory`. `analyzeUrl` returns data without visiting the URL. `explainCheck` selects predefined wording, and `setMode` changes wording without rechecking or adding history.
 
 ## AI's role
-AI assisted planning, code development, testing, and explanation. PluQ Lite uses deterministic rules, not live AI threat detection. It supports the theme “Build with AI, Protect What Matters, Innovate with People at the Center.” If PlutoHacks requires AI executing inside the application, confirm that requirement with organizers: this version does not do that.
+AI assisted in code development, explanation, and initial testing.
 
 ## Tests
 Run `node tests.js` if Node is installed. Tests exercise URL parsing, thresholds, error handling, explanation modes, history, clearing, examples, navigation markup, and blocked network-related APIs using a lightweight DOM substitute. They do not establish visual quality or real-browser accessibility. See TEST_RESULTS.md for the actual verification performed.
 
 For manual browser verification: open index.html; analyze each example; verify hostname, counts, and all four findings; switch modes; click its Analyze again button; clear history; reload; visit Home/Privacy/About; use Tab and Enter; inspect widths of 375px and 1280px in browser developer tools. In the Network panel, clear the log after initial page load and analyze several URLs: there should be no requests. Check that logo, layout, focus outlines, and wrapping are legible.
-
-## Three-minute live demo
-1. Open the site. Explain: “This helps people read a URL before clicking.”
-2. Click HTTPS, then Analyze URL. Show example.com and “No structural warnings detected”; point out this is not a safety guarantee.
-3. Click Misleading @, then Analyze URL. Show that untrusted.example is the actual destination, even though trusted.example appears first.
-4. Toggle Technical, then Simple. The same findings get different explanations.
-5. Try IP address: HTTP and the IP destination produce two warnings.
-6. Click Analyze again beneath a Recent Check, then Clear history.
-7. Point to the phishing tips and Privacy/About. Explain that rules run locally without visiting links or using a live AI model.
-
-Talking points: the browser URL parser separates hostname from login text; four rules produce warnings; predefined explanations keep results understandable; no threat-reputation service or website scanning is involved.
-
-## Screen-recording checklist
-- Close unrelated tabs and hide private notifications; reload to clear demo history.
-- Set readable browser zoom and check microphone audio with a short recording.
-- Record the same sequence above in approximately three minutes, showing the actual product.
-- Replay the recording to verify readable results and audible narration; ensure no personal URLs or notifications appear.
-- Submit the video link in the format requested by organizers. No slides are needed.
-
-## GitHub repository
-
-Project repository: https://github.com/chemsmilk/PluQ-Lite
-
-This project has its own public repository and local Git history. PlutoHacks2026 is a separate project and must not be modified when working on PluQ Lite.
 
 To submit, provide this repository URL and your recorded demonstration according to the event instructions. For the live demonstration, open index.html locally. GitHub Pages is not enabled by this source-code upload; deploying a public website is a separate action.
 
